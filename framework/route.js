@@ -1,7 +1,7 @@
 /**
  * @fileoverview Routing system for the mini-framework
  * @version 0.0.1
- * @author The Last of the Mohicans
+ * @author AJA!
  */
 
 import { allRoutes } from "./state.js";

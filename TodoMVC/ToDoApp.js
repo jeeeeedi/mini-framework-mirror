@@ -363,7 +363,7 @@ function sidebar() {
         createVirtualElement(
           "a",
           {
-            href: "https://github.com/JSundb/mini-framework/blob/main/FRAMEWORK_DOCS.md",
+            href: "https://01.gritlab.ax/git/atouba/mini-framework/src/branch/main/mini-framework-documentation.md",
           },
           "Documentation",
           []
@@ -391,13 +391,13 @@ function sidebar() {
     createVirtualElement("h4", {}, "Development Team", []),
     createVirtualElement("ul", {}, "", [
       createVirtualElement("li", {}, "", [
-        createVirtualElement("a", { href: "#" }, "Member 1", []),
+        createVirtualElement("a", { href: "#" }, "Anass", []),
       ]),
       createVirtualElement("li", {}, "", [
-        createVirtualElement("a", { href: "#" }, "Member 2", []),
+        createVirtualElement("a", { href: "#" }, "Anastasia", []),
       ]),
       createVirtualElement("li", {}, "", [
-        createVirtualElement("a", { href: "#" }, "Member 3", []),
+        createVirtualElement("a", { href: "#" }, "Jedi", []),
       ]),
     ]),
     createVirtualElement("footer", {}, "", [
@@ -410,7 +410,7 @@ function sidebar() {
       ),
       createVirtualElement(
         "a",
-        { href: "https://github.com/JSundb/mini-framework/issues" },
+        { href: "https://01.gritlab.ax/git/atouba/mini-framework/issues" },
         "let us know",
         []
       ),
@@ -427,7 +427,7 @@ function renderInfo() {
     createVirtualElement("p", {}, "Double-click to edit a todo", []),
     createVirtualElement("p", {}, "", [
       createVirtualElement("span", {}, "Created by ", []),
-      createVirtualElement("a", { href: "#" }, "The Last of the Mohicans", []),
+      createVirtualElement("a", { href: "#" }, "AJA!", []),
     ]),
     createVirtualElement("p", {}, "", [
       createVirtualElement("span", {}, "Part of ", []),

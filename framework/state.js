@@ -1,7 +1,7 @@
 /**
  * @fileoverview State management system for the mini-framework
  * @version 0.0.1
- * @author The Last of the Mohicans
+ * @author AJA!
  */
 
 /** @type {Map<string, Function>} Global route storage mapping URLs to handler functions */

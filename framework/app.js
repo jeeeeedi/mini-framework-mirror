@@ -1,7 +1,7 @@
 /**
  * @fileoverview Mini-framework core application module
  * @version 0.0.1
- * @author The Last of the Mohicans
+ * @author AJA!
  */
 
 // Import and re-export all framework components
