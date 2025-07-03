@@ -1,6 +1,6 @@
 /**
  * @fileoverview DOM manipulation and virtual DOM utilities for the mini-framework
- * @version 0.0.1
+ * @version 1.0.0
  * @author AJA!
  */
 

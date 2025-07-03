@@ -1,5 +1,4 @@
-/* TodoMVC Complete Styling - Based on React implementation */
-/* Source: https://todomvc.com/examples/react/dist/app.css */
+
 
 @charset "utf-8";
 
@@ -391,17 +390,6 @@ html .clear-completed:active {
     .filters {
         bottom: 10px;
     }
-}
-
-/* Debugging - Temporary red border to see app container */
-#app:empty::before {
-    content: "TodoMVC App Container (Empty - Framework Not Mounted)";
-    color: red;
-    font-style: italic;
-    padding: 20px;
-    display: block;
-    border: 2px solid red;
-    margin: 20px;
 }
 
 /*SIDEBAR STYLES */

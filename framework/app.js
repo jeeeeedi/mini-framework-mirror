@@ -1,16 +1,16 @@
 /**
  * @fileoverview Mini-framework core application module
- * @version 0.0.1
+ * @version 1.0.0
  * @author AJA!
  */
 
 // Import and re-export all framework components
-import { State, globalStorage } from "./state.js";
+import { globalStorage } from "./state.js";
 import { updateDom } from "./dom.js";
 import { addRoute, executeRoute } from "./route.js";
 
 /** @constant {string} Framework version */
-const VERSION = "0.0.1";
+const VERSION = "1.0.0";
 
 /**
  * Core application class that manages the entire application lifecycle
@@ -19,9 +19,9 @@ const VERSION = "0.0.1";
 class App {
   /**
    * Creates a new App instance
-   * @param {string} [rootSelector='#app'] - CSS selector for the root element
+   * @param {string} [rootSelector] - CSS selector for the root element
    */
-  constructor(rootSelector = "#app") {
+  constructor(rootSelector) {
     /** @type {Element|null} Root DOM element */
     this.rootElement = null;
     /** @type {string} CSS selector for root element */
@@ -131,14 +131,14 @@ class App {
 
 /**
  * Factory function for creating new App instances
- * @param {string} [rootSelector='#app'] - CSS selector for the root element
+ * @param {string} [rootSelector] - CSS selector for the root element
  * @returns {App} New App instance
  * @example
  * const app = createApp('#my-app');
  * app.setRenderFunction(() => ({ tag: 'div', text: 'Hello World' }));
  * app.init();
  */
-export function createApp(rootSelector = "#app") {
+export function createApp(rootSelector) {
   return new App(rootSelector);
 }
 
