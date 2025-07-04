@@ -12,6 +12,7 @@ import { createApp } from "../framework/app.js";
  * @type {Object}
  */
 const app = createApp("body");
+let editHandled = false;
 
 /**
  * Initialize TodoMVC application state
@@ -59,8 +60,17 @@ function setFilter(filter) {
  * @returns {Array<Object>} Array of virtual elements including sidebar, main app, and footer
  */
 function renderApp() {
+
   const state = app.getState();
+
   const visibleTodos = getFilteredTodos(state.todos, state.filter);
+  const ids = state.todos.map(t => t.id);
+  const duplicates = ids.filter((id, idx) => ids.indexOf(id) !== idx);
+  if (duplicates.length > 0) {
+    console.warn("[DUPLICATE TODO IDS]", duplicates);
+  }
+  window.renderCount = (window.renderCount || 0) + 1;
+  console.log("[renderApp] render count:", window.renderCount);
 
   return [
     createVirtualElement("aside", { class: "learn" }, "", sidebar()),
@@ -83,15 +93,35 @@ function renderHeader() {
   return createVirtualElement("header", { class: "header" }, "", [
     createVirtualElement("h1", {}, "todos", []),
     createVirtualElement(
-      "input",
-      {
-        class: "new-todo",
-        placeholder: "What needs to be done?",
-        autofocus: "",
-        onkeydown: handleNewTodoKeydown,
-      },
+      "div",
+      { class: "input-container" },
       "",
-      []
+      [
+        createVirtualElement(
+          "input",
+          {
+            class: "new-todo",
+            id: "todo-input",
+            type: "text",
+            "data-testid": "text-input",
+            placeholder: "What needs to be done?",
+            value: "",
+            autofocus: "",
+            onkeydown: handleNewTodoKeydown,
+          },
+          "",
+          []
+        ),
+        createVirtualElement(
+          "label",
+          {
+            class: "visually-hidden",
+            for: "todo-input",
+          },
+          "New Todo Input",
+          []
+        ),
+      ]
     ),
   ]);
 }
@@ -223,7 +253,15 @@ function renderTodoItem(todo) {
           class: "edit",
           value: todo.title,
           onkeydown: (e) => handleEditKeydown(e, todo.id),
-          onblur: () => app.setState({editingId: null, focusEditTodo: null}),
+          onblur: () => {
+            if (editHandled) {
+              editHandled = false;
+              return;
+            }
+            editHandled = false;
+            app.setState({editingId: null, focusEditTodo: null})
+            console.log("oblur activated");
+          }
         },
         "",
         []
@@ -256,7 +294,13 @@ function handleToggleAll() {
  */
 function handleEditKeydown(e, todoId) {
   if (e.key === "Enter") {
+
+    if (editHandled) return;
+
+    editHandled = true;
     editTodo(todoId, e.target.value);
+    e.preventDefault();
+    e.stopPropagation();
   }
   if (e.key === "Escape") {
     app.setState({
@@ -463,6 +507,7 @@ function getFilteredTodos(todos, filter) {
  * @returns {boolean} True if todo was added successfully, false otherwise
  */
 function addTodo(title) {
+  console.log("addTodo function");
   if (title.length < 2) {
     return false;
   }
@@ -499,6 +544,7 @@ function toggleTodo(id) {
  * @param {string} newTitle - The new title for the todo
  */
 function editTodo(id, newTitle) {
+  console.log("editTodo function");
   const trimmedTitle = newTitle.trim();
 
   if (trimmedTitle.length < 2) {
@@ -579,4 +625,7 @@ function clearCompleted() {
  * Initialize and start the application
  * Sets the render function and initializes the app with routing
  */
-app.setRenderFunction(renderApp).init();
+console.log("[setRenderFunction] called");
+app.setRenderFunction(renderApp);
+console.log("[app.init] called");
+app.init();

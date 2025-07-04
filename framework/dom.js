@@ -25,7 +25,6 @@ const virtualToDomMap = new Map();
  * const vElement = createVirtualElement('div', { class: 'container' }, 'Hello', []);
  */
 export function createVirtualElement(tag, attributes, innerText, children) {
-  // More thorough check later (TODO)
   if (!tag || typeof tag !== "string") {
     throw new Error("Error: tag is not a string");
   }
@@ -123,6 +122,7 @@ export function elementToHtmlElement(elem) {
   elem.children.forEach((child) => {
     returnElement.appendChild(elementToHtmlElement(child));
   });
+  console.log("elementToHtmlElement" );
   return returnElement;
 }
 
@@ -155,6 +155,7 @@ export function updateDom(topElement = document.body, attachElements) {
   );
   topElement.innerHTML = "";
   for (const element of attachElements) {
+    console.log("dom.js:157", element);
     topElement.appendChild(elementToHtmlElement(element));
   }
 }
