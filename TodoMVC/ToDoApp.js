@@ -223,7 +223,7 @@ function renderTodoItem(todo) {
           class: "edit",
           value: todo.title,
           onkeydown: (e) => handleEditKeydown(e, todo.id),
-          onblur: (e) => editTodo(todo.id, todo.title),
+          onblur: () => app.setState({editingId: null, focusEditTodo: null}),
         },
         "",
         []
