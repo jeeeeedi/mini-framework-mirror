@@ -64,13 +64,6 @@ function renderApp() {
   const state = app.getState();
 
   const visibleTodos = getFilteredTodos(state.todos, state.filter);
-  const ids = state.todos.map(t => t.id);
-  const duplicates = ids.filter((id, idx) => ids.indexOf(id) !== idx);
-  if (duplicates.length > 0) {
-    console.warn("[DUPLICATE TODO IDS]", duplicates);
-  }
-  window.renderCount = (window.renderCount || 0) + 1;
-  console.log("[renderApp] render count:", window.renderCount);
 
   return [
     createVirtualElement("aside", { class: "learn" }, "", sidebar()),
@@ -260,7 +253,7 @@ function renderTodoItem(todo) {
             }
             editHandled = false;
             app.setState({editingId: null, focusEditTodo: null})
-            console.log("oblur activated");
+            console.log("onblur activated");
           }
         },
         "",
@@ -625,7 +618,7 @@ function clearCompleted() {
  * Initialize and start the application
  * Sets the render function and initializes the app with routing
  */
-console.log("[setRenderFunction] called");
+
 app.setRenderFunction(renderApp);
-console.log("[app.init] called");
+
 app.init();

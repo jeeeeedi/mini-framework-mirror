@@ -122,7 +122,7 @@ export function elementToHtmlElement(elem) {
   elem.children.forEach((child) => {
     returnElement.appendChild(elementToHtmlElement(child));
   });
-  console.log("elementToHtmlElement" );
+ 
   return returnElement;
 }
 
@@ -155,7 +155,7 @@ export function updateDom(topElement = document.body, attachElements) {
   );
   topElement.innerHTML = "";
   for (const element of attachElements) {
-    console.log("dom.js:157", element);
+
     topElement.appendChild(elementToHtmlElement(element));
   }
 }
