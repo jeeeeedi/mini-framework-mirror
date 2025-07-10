@@ -67,7 +67,7 @@ function renderApp() {
 
   return [
     createVirtualElement("aside", { class: "learn" }, "", sidebar()),
-    createVirtualElement("section", { class: "todoapp" }, "", [
+    createVirtualElement("section", { class: "todoapp", id: "root" }, "", [
       renderHeader(),
       renderMain(visibleTodos),
       renderFooter(),
@@ -83,7 +83,7 @@ function renderApp() {
 function renderHeader() {
   const state = app.getState();
 
-  return createVirtualElement("header", { class: "header" }, "", [
+  return createVirtualElement("header", { class: "header", "data-testid": "header" }, "", [
     createVirtualElement("h1", {}, "todos", []),
     createVirtualElement(
       "div",
@@ -146,9 +146,16 @@ function renderMain(visibleTodos) {
   if (!state.todos || state.todos.length === 0) {
     return createVirtualElement(
       "main",
-      { class: "main", style: "display: none;" },
+      { class: "main", "data-testid": "main" },
       "",
-      []
+      [
+        createVirtualElement(
+          "ul",
+          { class: "todo-list", "data-testid": "todo-list" },
+          "",
+          []
+        ),
+      ]
     );
   }
 
@@ -157,7 +164,7 @@ function renderMain(visibleTodos) {
 
   return createVirtualElement(
     "main",
-    { class: "main", style: "display: block;" },
+    { class: "main", "data-testid": "main" },
     "",
     [
       createVirtualElement("div", { class: "toggle-all-container" }, "", [
@@ -167,6 +174,7 @@ function renderMain(visibleTodos) {
             id: "toggle-all",
             class: "toggle-all",
             type: "checkbox",
+            "data-testid": "toggle-all",
             checked: allCompleted,
             onchange: handleToggleAll,
           },
@@ -179,13 +187,13 @@ function renderMain(visibleTodos) {
             class: "toggle-all-label",
             for: "toggle-all",
           },
-          "Mark all as complete",
+          "Toggle All Input",
           []
         ),
       ]),
       createVirtualElement(
         "ul",
-        { class: "todo-list" },
+        { class: "todo-list", "data-testid": "todo-list" },
         "",
         (visibleTodos || []).map((todo) => renderTodoItem(todo))
       ),
@@ -212,6 +220,7 @@ function renderTodoItem(todo) {
         {
           class: "toggle",
           type: "checkbox",
+          "data-testid": "todo-item-toggle",
           checked: todo.completed,
           onclick: () => toggleTodo(todo.id),
         },
@@ -221,6 +230,7 @@ function renderTodoItem(todo) {
       createVirtualElement(
         "label",
         {
+          "data-testid": "todo-item-label",
           ondblclick: () => startEditing(todo.id),
         },
         todo.title,
@@ -230,6 +240,7 @@ function renderTodoItem(todo) {
         "button",
         {
           class: "destroy",
+          "data-testid": "todo-item-button",
           onclick: () => deleteTodo(todo.id),
         },
         "",
@@ -266,6 +277,7 @@ function renderTodoItem(todo) {
     "li",
     {
       "data-id": todo.id.toString(),
+      "data-testid": "todo-item",
       class: classes.join(" "),
     },
     "",
@@ -329,14 +341,14 @@ function renderFooter() {
 
   return createVirtualElement(
     "footer",
-    { class: "footer", style: "display: block;" },
+    { class: "footer", "data-testid": "footer", style: "display: block;" },
     "",
     [
       createVirtualElement("span", { class: "todo-count" }, "", [
         createVirtualElement("strong", {}, activeCount.toString(), []),
         createVirtualElement("span", {}, ` ${itemText} left!`, []),
       ]),
-      createVirtualElement("ul", { class: "filters" }, "", [
+      createVirtualElement("ul", { class: "filters", "data-testid": "footer-navigation" }, "", [
         renderFilterLink("All", "#/", state.filter === "all"),
         renderFilterLink("Active", "#/active", state.filter === "active"),
         renderFilterLink(
@@ -345,26 +357,16 @@ function renderFooter() {
           state.filter === "completed"
         ),
       ]),
-      completedCount > 0
-        ? createVirtualElement(
-            "button",
-            {
-              class: "clear-completed",
-              style: "display: block;",
-              onclick: clearCompleted,
-            },
-            "Clear completed",
-            []
-          )
-        : createVirtualElement(
-            "button",
-            {
-              class: "clear-completed",
-              style: "display: none;",
-            },
-            "",
-            []
-          ),
+      createVirtualElement(
+        "button",
+        {
+          class: "clear-completed",
+          disabled: completedCount === 0 ? "" : undefined,
+          onclick: completedCount > 0 ? clearCompleted : undefined,
+        },
+        "Clear completed",
+        []
+      ),
     ].filter(Boolean)
   );
 }
@@ -467,8 +469,8 @@ function renderInfo() {
       createVirtualElement("a", { href: "#" }, "AJA!", []),
     ]),
     createVirtualElement("p", {}, "", [
-      createVirtualElement("span", {}, "Part of ", []),
-      createVirtualElement("a", { href: "http://todomvc.com" }, "TodoMVC", []),
+      createVirtualElement("span", {}, "Team memebers ", []),
+      createVirtualElement("a", { href: "#" }, "Jedi, Anass, Anastasia", []),
     ]),
   ]);
 }
